@@ -13,6 +13,7 @@ public class Account {
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Veuillez donner un nom au compte: ");
 			this.name = scanner.nextLine();
+			scanner.close();
 		}
 		this.balance = balance;
 		this.number = randomUUID().toString();
@@ -29,42 +30,55 @@ public class Account {
 	
 	
 	public void deposit(final Double amount) {
-		if(amount<0) {
+		if(amount>0) {
 			this.balance += amount ;
 		}
 	}
 	
 	public void  withdraw(final double amount) {
-		if(amount < 0) {
+		if(amount > 0) {
 			this.balance -= amount ;
 		}
 	}
 	
 	public void transfer(Double amount, Account other) {
-		if(amount<0) {
+		if(amount>0) {
 			this.withdraw(amount);
 			other.deposit(amount);
 		}
 		
 	}
-	
-	public static void main(String [] args) {
-		Account acc1 = new Account(null, 10);
-        System.out.println("Account 1 number: " + acc1.number);
-        System.out.println("Account 1 name: " + acc1.name);
-        System.out.println("Account 1 balance: " + acc1.balance);
-
-        // Test du constructeur sans argument
-        Account acc2 = new Account();
-        System.out.println("Account 2 number: " + acc2.number);
-        System.out.println("Account 2 name: " + acc2.name);
-        System.out.println("Account 2 balance: " + acc2.balance);
-
-        // Test du constructeur par copie
-        Account acc3 = new Account(acc1);
-        System.out.println("Account 3 number: " + acc3.number);
-        System.out.println("Account 3 name: " + acc3.name);
-        System.out.println("Account 3 balance: " + acc3.balance);
-		
+	@Override
+	public String toString() {
+		return "Account{number: "+number+", nameOwner: "+ name + " }";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Account) {
+			Account acc = (Account) obj ;
+			return this.name.equals(acc.name) && this.number.equals(acc.number) ;
+		}
+		return false;
+	}
+	
+	public void setName(String name) {
+		this.name = name ;
+	}
+	
+	public void setBalnce(Double balance) throws Exception {
+		if(balance<0) {
+			throw new Exception("opération impossible");
+		}
+		this.balance = balance ;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	public Double getBalance() {
+		return this.balance;
+	}
+	
+	
 }
