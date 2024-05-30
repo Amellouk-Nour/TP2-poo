@@ -28,6 +28,26 @@ public class Account {
 	}
 	
 	
+	public void deposit(final Double amount) {
+		if(amount<0) {
+			this.balance += amount ;
+		}
+	}
+	
+	public void  withdraw(final double amount) {
+		if(amount < 0) {
+			this.balance -= amount ;
+		}
+	}
+	
+	public void transfer(Double amount, Account other) {
+		if(amount<0) {
+			this.withdraw(amount);
+			other.deposit(amount);
+		}
+		
+	}
+	
 	public static void main(String [] args) {
 		Account acc1 = new Account(null, 10);
         System.out.println("Account 1 number: " + acc1.number);
